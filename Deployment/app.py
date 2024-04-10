@@ -28,18 +28,33 @@ def app():
 
     st.write(
         f"""<br>
+        <div style='text-align: center;'>
         Our fire and smoke detection model was built using the {yolo_link} model, 
         trained on the {dfire_link} dataset and some our own data as well. <br>
-        This app enables you to upload an image of your choice and use our model to detect
-        fire and smoke if present in the image.
-    	<br><br><br>
+        This app enables you to choose an image and use it to test our model and detect
+        fire or smoke if present in the image.
+    	<br><br><br><br>
+        </div>
         """,
         unsafe_allow_html=True
         )
     
     # Testing the model
-    st.write("## Test the model")
-
+    st.markdown(
+        """ 
+            <div style='text-align: center;'>
+                <h2>Test the model</h2>
+            </div>
+        """,
+        unsafe_allow_html=True,
+        )
+    
+    image_source = st.radio("Select image source:", ("Enter URL", "Upload from Computer"))
+    
+    if image_source == "Enter URL":
+        image_url = st.text_input("Enter image URL:")
+    else:
+        image_file = st.file_uploader("Upload image:", type=["jpg", "jpeg", "png"])
     
 
 
