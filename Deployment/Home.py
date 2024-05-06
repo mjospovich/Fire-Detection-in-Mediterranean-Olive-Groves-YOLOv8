@@ -2,13 +2,28 @@
 import streamlit as st
 import time
 
-#* Set the page config
-st.set_page_config(
-    page_title="Fire and Smoke Detection",
-    page_icon="🔥",
-    layout="centered",
-    initial_sidebar_state="expanded"
+def setup():
+    #* Set the page config
+    st.set_page_config(
+        page_title="Fire and Smoke Detection",
+        page_icon="🔥",
+        layout="centered",
+        initial_sidebar_state="expanded",
     )
+    
+    #* Set the sidebar
+    st.sidebar.title("Links:")
+    st.sidebar.markdown("LinkedIn: [Profile](https://www.linkedin.com/in/mjospovich)")
+    st.sidebar.markdown("GitHub: [Profile](https://github.com/mjospovich)")
+    st.sidebar.markdown("GitHub: [Repository](https://github.com/mjospovich/Fire-Smoke-Detection)")
+    st.sidebar.markdown("Email: [mjosip01@fesb.hr](mailto:mjosip01@fesb.hr)")
+    st.sidebar.caption("Developed by Martin Josipović, 2024.")
+    st.sidebar.image(
+        "Deployment/assets/wildfire2.png",
+        caption="Ai generated image of a wildfire",
+        use_column_width="always"
+        )
+
 
 #* Render the app
 def app():
@@ -114,4 +129,5 @@ def app():
 
 #! Run the app
 if __name__ == "__main__":
+    setup()
     app()
