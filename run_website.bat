@@ -1,0 +1,1 @@
+streamlit run Deployment\Home.py

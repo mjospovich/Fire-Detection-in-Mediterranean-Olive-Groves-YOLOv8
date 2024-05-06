@@ -8,7 +8,7 @@ def setup():
         page_title="Fire and Smoke Detection",
         page_icon="🔥",
         layout="centered",
-        initial_sidebar_state="expanded",
+        initial_sidebar_state="collapsed",
     )
     
     #* Set the sidebar
