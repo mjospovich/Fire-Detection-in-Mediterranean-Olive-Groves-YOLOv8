@@ -4,8 +4,6 @@ from ultralytics import YOLO
 import requests
 from PIL import Image
 import os
-from glob import glob
-from numpy import random
 import io
 from io import BytesIO
 import time
@@ -16,7 +14,8 @@ from datetime import datetime
 #* Function to load the YOLO model
 @st.cache_resource
 def load_model(model_name="nano"):
-    model = YOLO(rf"\Github\Fire-Smoke-Detection\Deployment\Models\{model_name}.pt")
+    path = rf"Deployment\Models\{model_name}.pt" # Depends on where the app is launched from
+    model = YOLO(path)
     return model
 
 #* Function to predict objects in the image
@@ -26,7 +25,7 @@ def predict_image(model, image, conf_threshold, iou_threshold):
         image,
         conf=conf_threshold,
         iou=iou_threshold,
-        device='gpu',
+        device='cpu',
     )
 
     class_name = model.model.names
@@ -129,22 +128,39 @@ def app():
         """ 
             <div style='text-align: center;'>
                 <h2>Test the model</h2>
-                <p>Select the way you wish to provide the image and test out our model on it!</p>
+                <p>
+                    Select the model you want to use, play with the IOU and confidence thresholds,
+                    and upload an image or use one of ours to test the model.
+                </p>
                 <hr>
             </div>
         """,
         unsafe_allow_html=True,
     )
 
-    # Select the model info
-    col1, col2 = st.columns(2)
-    with col1:
-        model_type = st.radio(
+    # Select the model
+    model_type = st.radio(
             "Select model:",
             ("model_nano", "model_large"),
             index=0
         )
-        model = load_model(model_type[6:])
+    model = load_model(model_type[6:])
+
+    # Explain the models
+    with st.expander("What do different models do?"):
+            st.caption("We have 2 models to choose from:")
+            st.caption("- Nano model is faster but less accurate.")
+            st.caption("- Large model is slower but more accurate.")
+
+    
+    col1, col2 = st.columns(2)
+    # Change the IOU threshold
+    with col1:
+        io_threshold = st.slider(
+            "IOU threshold:",
+            0.0, 1.0, 0.5, 0.02
+        )
+        
     # Change the confidence threshold
     with col2:
         confidence_threshold = st.slider(
@@ -152,19 +168,29 @@ def app():
             0.0, 1.0, 0.2, 0.02
         )
 
+    # Explain the thresholds
     col1, col2 = st.columns(2)
+
     with col1:
-        with st.expander("What do different models do?"):
-            st.caption("We have 2 models to choose from:")
-            st.caption("Nano model is faster but less accurate.")
-            st.caption("Large model is slower but more accurate.")
+        with st.expander("What is the IOU Threshold?"):
+            st.caption("The IOU Threshold (0-1):")
+            st.caption("- Sets the overlap needed for two detections to be considered the same object.")
+            st.caption("- Default is 0.5.")
+            st.caption("- Higher values: more overlapping detections, as each box needs to closely match the ground truth.")
+            st.caption("- Lower values: fewer detections, as the model is more lenient with overlap.")
+
     with col2:
         with st.expander("What is the Confidence Threshold?"):
-            st.caption("The Confidence Threshold is the minimum confidence level required for a detection to be displayed.")
-            st.caption("The value is between 0 and 1, while the current default value is 0.2.")
-            st.caption("Lower values will result in fewer detections, while higher values will result in more detections.")
+            st.caption("The Confidence Threshold (0-1):")
+            st.caption("- Sets the minimum confidence for an object to be detected.")
+            st.caption("- Default is 0.2.")
+            st.caption("- Higher values: only high-confidence detections are shown.")
+            st.caption("- Lower values: more detections, including less certain ones.")
 
     st.divider()
+
+
+
 
     # Select image source
     image_source = st.radio(
@@ -199,7 +225,7 @@ def app():
             with st.spinner("Predicting..."):
                 time.sleep(0.8)
                 # Run the model
-                prediction, prediction_text = predict_image(model, image, confidence_threshold, 0.5)
+                prediction, prediction_text = predict_image(model, image, confidence_threshold, io_threshold)
                 
             # Display the prediction image
             st.image(prediction, caption="Fire and smoke detection results", use_column_width=True)
