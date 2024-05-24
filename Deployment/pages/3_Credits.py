@@ -1,7 +1,7 @@
 # All references, links and other stuff used to create the project are mentioned here.
 import streamlit as st
 
-def credits():
+def styles():
     st.markdown("""
     <style>
     .credits-title {
@@ -10,31 +10,50 @@ def credits():
     .divider {
         margin-top: -0.5rem;
     }
+    
+    a {
+        text-decoration: none !important;
+        color: #ABC !important;
+    }
     </style>
     """, unsafe_allow_html=True)
+
+def credits():
     
     st.markdown("<h1 class='credits-title'>Credits</h1>", unsafe_allow_html=True)
     
     st.markdown("""
     <hr class='divider'>
     
-    ### Libraries
-    - **Deep Learning Model Library:** [Ultralytics](https://github.com/ultralytics/ultralytics)
+    <h3>Libraries</h3>
+    <ul>
+        <li><b>Deep Learning Model Library:</b> <a href='https://github.com/ultralytics/ultralytics' target='_blank'>Ultralytics</a></li>
+    </ul>
     
-    ### Dataset
-    - **Fire Detection Dataset:** [DFireDataset](https://github.com/gaiasd/DFireDataset?tab=readme-ov-file)
-    - **Paper Citation for Dataset Users:**
-      - Pedro Vinícius Almeida Borges de Venâncio, Adriano Chaves Lisboa, Adriano Vilela Barbosa: 
-        *An automatic fire detection system based on deep convolutional neural networks for low-power, resource-constrained devices.* 
-        In: Neural Computing and Applications, 2022.
+    <h3>Dataset</h3>
+    <ul>
+        <li><b>Fire Detection Dataset:</b> <a href='https://github.com/gaiasd/DFireDataset?tab=readme-ov-file' target='_blank'>DFireDataset</a></li>
+        <li><b>Paper Citation for Dataset Users:</b>
+            <ul>
+                <li>Pedro Vinícius Almeida Borges de Venâncio, Adriano Chaves Lisboa, Adriano Vilela Barbosa: 
+                <i>An automatic fire detection system based on deep convolutional neural networks for low-power, resource-constrained devices.</i> 
+                In: Neural Computing and Applications, 2022.</li>
+            </ul>
+        </li>
+    </ul>
     
-    ### Tutorials and Guides
-    - **Help for entire process of training a model and making the dataset:**
-      - Video: [YouTube Video](https://youtu.be/m9fH9OWn8YM?list=PL-3_-KnXE6iNEoXA2Ji5zfHniMfLjjmll)
-      - Channel: [Computer Vision Engineer](https://www.youtube.com/@ComputerVisionEngineer)
-    
+    <h3>Tutorials and Guides</h3>
+    <ul>
+        <li><b>Help for entire process of training a model and making the dataset:</b>
+            <ul>
+                <li>Video: <a href='https://youtu.be/m9fH9OWn8YM?list=PL-3_-KnXE6iNEoXA2Ji5zfHniMfLjjmll' target='_blank'>YouTube Video</a></li>
+                <li>Channel: <a href='https://www.youtube.com/@ComputerVisionEngineer' target='_blank'>Computer Vision Engineer</a></li>
+            </ul>
+        </li>
+    </ul>
     
     """, unsafe_allow_html=True)
 
 # To display the credits page, call the function:
 credits()
+styles()
