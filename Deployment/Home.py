@@ -2,12 +2,13 @@ import os
 import io
 import cv2
 import time
+import random
 import requests
 from PIL import Image
 import streamlit as st
 from io import BytesIO
-from Setup import setup
 from Style import style
+from Setup import setup  
 from ultralytics import YOLO
 from datetime import datetime
 
@@ -164,6 +165,10 @@ def app():
 
     st.divider()
 
+    # Initialize session state for selected image
+    if "selected_image" not in st.session_state:
+        st.session_state.selected_image = None
+
     # Select image source
     image_source = st.radio(
         "Select image source:", ("Upload from Computer",
@@ -181,7 +186,13 @@ def app():
         image_file = st.file_uploader(
             "Upload image:", type=["jpg", "jpeg", "png"])
     else:
-        image_file = "Deployment/assets/test_image.jpg"
+        # Only select a new random image if the user switches to "Use one of ours"
+        if st.session_state.selected_image is None or st.session_state.image_source != "Use one of ours":
+            dataset_path = "Deployment/assets/croatia_fire_dataset"
+            st.session_state.selected_image = os.path.join(
+                dataset_path, random.choice(os.listdir(dataset_path)))
+            st.session_state.image_source = "Use one of ours"
+        image_file = st.session_state.selected_image
 
     # Display the image and run model
     if image_file or image_url:
