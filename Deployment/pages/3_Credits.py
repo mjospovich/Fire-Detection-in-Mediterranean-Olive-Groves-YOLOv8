@@ -1,5 +1,7 @@
 # All references, links and other stuff used to create the project are mentioned here.
 import streamlit as st
+from Setup import setup
+from Style import style
 
 def styles():
     st.markdown("""
@@ -11,10 +13,6 @@ def styles():
         margin-top: -0.5rem;
     }
     
-    a {
-        text-decoration: none !important;
-        color: #ABC !important;
-    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -55,5 +53,7 @@ def credits():
     """, unsafe_allow_html=True)
 
 # To display the credits page, call the function:
+setup(title="Credits", sidebar="expanded")
 credits()
+style()
 styles()

@@ -1,5 +1,7 @@
-import streamlit as st
 import time
+import streamlit as st
+from Setup import setup
+from Style import style
 
 # on_click function for the submit button
 def submit():
@@ -55,4 +57,6 @@ def report_an_issue():
             st.session_state['form_submitted'] = False
 
 # run the page
+setup(title="Report An Issue", sidebar="expanded")
 report_an_issue()
+style()

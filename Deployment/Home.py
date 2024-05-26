@@ -6,6 +6,8 @@ import requests
 from PIL import Image
 import streamlit as st
 from io import BytesIO
+from Setup import setup
+from Style import style
 from ultralytics import YOLO
 from datetime import datetime
 
@@ -65,45 +67,6 @@ def predict_image(model, image, conf_threshold, iou_threshold):
     res_image = cv2.cvtColor(res_image, cv2.COLOR_BGR2RGB)
 
     return res_image, prediction_text
-
-
-def style():
-    st.markdown(
-        """
-    <style>
-    a {
-        text-decoration: none !important;
-        color: #ABC !important;
-    }
-    </style>
-    """,
-        unsafe_allow_html=True,
-    )
-
-
-# * Function to setup the app
-def setup():
-    # Set the page config
-    st.set_page_config(
-        page_title="Fire and Smoke Detection",
-        page_icon="🔥",
-        layout="centered",
-        initial_sidebar_state="collapsed",
-    )
-    # Set the sidebar
-    st.sidebar.title("Links:")
-    st.sidebar.markdown("LinkedIn [Profile](https://github.com/mjospovich)")
-    st.sidebar.markdown("GitHub [Profile](https://github.com/mjospovich)")
-    st.sidebar.markdown(
-        "GitHub [Repository](https://github.com/mjospovich/Fire-Smoke-Detection)"
-    )
-    st.sidebar.markdown("Email: [mjosip01@fesb.hr](mailto:mjosip01@fesb.hr)")
-    st.sidebar.caption("Developed by Martin Josipović, 2024.")
-    st.sidebar.image(
-        "Deployment/assets/wildfire2.png",
-        caption="AI generated image of a wildfire",
-        use_column_width="always",
-    )
 
 
 # * Render the app
