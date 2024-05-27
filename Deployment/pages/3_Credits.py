@@ -3,25 +3,13 @@ import streamlit as st
 from Setup import setup
 from Style import style
 
-def styles():
-    st.markdown("""
-    <style>
-    .credits-title {
-        margin-bottom: 0.5rem;
-    }
-    .divider {
-        margin-top: -0.5rem;
-    }
-    
-    </style>
-    """, unsafe_allow_html=True)
 
 def credits():
     
-    st.markdown("<h1 class='credits-title'>Credits</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 class='small-margin-title'>Credits</h1>", unsafe_allow_html=True)
     
     st.markdown("""
-    <hr class='divider'>
+    <hr class='small-margin-divider'>
     
     <h3>Libraries</h3>
     <ul>
@@ -56,4 +44,3 @@ def credits():
 setup(title="Credits", sidebar="expanded")
 credits()
 style()
-styles()
