@@ -74,6 +74,6 @@ def our_dataset():
 
 
 # Run the setup, page content, and style functions
-setup(title="Our Dataset", sidebar="expanded")
+setup(title="Our Dataset")
 our_dataset()
 style()

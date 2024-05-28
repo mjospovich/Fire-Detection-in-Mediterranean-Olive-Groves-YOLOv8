@@ -57,6 +57,6 @@ def report_an_issue():
             st.session_state['form_submitted'] = False
 
 # run the page
-setup(title="Report An Issue", sidebar="expanded")
+setup(title="Report An Issue")
 report_an_issue()
 style()

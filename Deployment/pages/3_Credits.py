@@ -41,6 +41,6 @@ def credits():
     """, unsafe_allow_html=True)
 
 # To display the credits page, call the function:
-setup(title="Credits", sidebar="expanded")
+setup(title="Credits")
 credits()
 style()

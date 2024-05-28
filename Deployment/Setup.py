@@ -5,7 +5,7 @@ import streamlit as st
 def setup(
     icon="Deployment/assets/icons/icons8-fire-48.png",
     title="Fire and Smoke Detection",
-    sidebar="collapsed",
+    sidebar="auto",
 ):
     # Set the page config
     st.set_page_config(
