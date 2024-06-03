@@ -18,8 +18,8 @@ def our_dataset():
     st.write(
         """
     ### Description
-    This dataset contains images of fire and smoke used for aditional training and testing our fire detection model.
-    The dataset includes images of smoky fire in olive groves captured in coastal Croatia. It offers 
+    This dataset contains images of fire and smoke used for aditional training and testing of our fire detection model.
+    The dataset includes images of smoky fires in olive groves captured in coastal Croatia. It offers 
     further training data for fire detection models that specialze in detecting small fires on mediterranean landscapes.
     """
     )

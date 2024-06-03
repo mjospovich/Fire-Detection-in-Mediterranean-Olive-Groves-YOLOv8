@@ -16,7 +16,7 @@ def setup(
     )
     # Set the sidebar
     st.sidebar.title("Links:")
-    st.sidebar.markdown("LinkedIn [Profile](https://github.com/mjospovich)")
+    st.sidebar.markdown("LinkedIn [Profile](https://linkedin.com/in/mjospovich)")
     st.sidebar.markdown("GitHub [Profile](https://github.com/mjospovich)")
     st.sidebar.markdown(
         "GitHub [Repository](https://github.com/mjospovich/Fire-Smoke-Detection)"
