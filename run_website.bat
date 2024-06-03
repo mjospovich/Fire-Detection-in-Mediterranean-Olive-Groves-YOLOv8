@@ -1,1 +1,1 @@
-streamlit run Deployment\Home.py
+streamlit run Deployment\Home.py --server.maxUploadSize 50

@@ -11,63 +11,73 @@ from Style import style
 from Setup import setup  
 from ultralytics import YOLO
 from datetime import datetime
+from urllib.error import URLError
 
 # if issue with duplicate libraries, uncomment the line below
-# os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
 
 # * Function to load the YOLO model
 @st.cache_resource
 def load_model(model_name="nano"):
-    # Depends on where the app is launched from
-    path = rf"Deployment\Models\{model_name}.pt"
-    model = YOLO(path)
-    return model
+    try:
+        # Depends on where the app is launched from
+        path = rf"Deployment\Models\{model_name}.pt"
+        model = YOLO(path)
+        return model
+    except FileNotFoundError:
+        st.error(f"Model file {model_name}.pt not found.")
+        return None
 
 
 # * Function to predict objects in the image
 def predict_image(model, image, conf_threshold, iou_threshold):
-    # Predict objects using the model
-    res = model.predict(
-        image,
-        conf=conf_threshold,
-        iou=iou_threshold,
-        device="cpu",
-    )
+    try:
+        # Predict objects using the model
+        res = model.predict(
+            image,
+            conf=conf_threshold,
+            iou=iou_threshold,
+            device="cpu",
+        )
 
-    class_name = model.model.names
-    classes = res[0].boxes.cls
-    class_counts = {}
+        class_name = model.model.names
+        classes = res[0].boxes.cls
+        class_counts = {}
 
-    # Count the number of occurrences for each class
-    for c in classes:
-        c = int(c)
-        class_counts[class_name[c]] = class_counts.get(class_name[c], 0) + 1
+        # Count the number of occurrences for each class
+        for c in classes:
+            c = int(c)
+            class_counts[class_name[c]] = class_counts.get(class_name[c], 0) + 1
 
-    # Generate prediction text
-    prediction_text = "Predicted "
-    for k, v in sorted(class_counts.items(), key=lambda item: item[1], reverse=True):
-        prediction_text += f"{v} {k}"
+        # Generate prediction text
+        prediction_text = "Predicted "
+        for k, v in sorted(class_counts.items(), key=lambda item: item[1], reverse=True):
+            prediction_text += f"{v} {k}"
 
-        if v > 1:
-            prediction_text += "s"
+            if v > 1:
+                prediction_text += "s"
 
-        prediction_text += " and "
+            prediction_text += " and "
 
-    prediction_text = prediction_text[:-2]
-    if len(class_counts) == 0:
-        prediction_text = "No objects detected"
+        prediction_text = prediction_text[:-2]
+        if len(class_counts) == 0:
+            prediction_text = "No objects detected"
 
-    # Calculate inference latency
-    latency = sum(res[0].speed.values())  # in ms, need to convert to seconds
-    latency = round(latency / 1000, 2)
-    prediction_text += f" in {latency} seconds."
+        # Calculate inference latency
+        latency = sum(res[0].speed.values())  # in ms, need to convert to seconds
+        latency = round(latency / 1000, 2)
+        prediction_text += f" in {latency} seconds."
 
-    # Convert the result image to RGB
-    res_image = res[0].plot()
-    res_image = cv2.cvtColor(res_image, cv2.COLOR_BGR2RGB)
+        # Convert the result image to RGB
+        res_image = res[0].plot()
+        res_image = cv2.cvtColor(res_image, cv2.COLOR_BGR2RGB)
 
-    return res_image, prediction_text
+        return res_image, prediction_text
+    
+    except Exception as e:
+        st.error(f"Error during prediction: {str(e)}")
+        return None, "Prediction failed."
 
 
 # * Render the app
@@ -116,14 +126,14 @@ def app():
 
     # Select the model
     model_type = st.radio(
-        "Select model:", ("model_nano", "model_large"), index=0)
+        "Select model:", ("model_nano", "model_small"), index=0)
     model = load_model(model_type[6:])
 
     # Explain the models
     with st.expander("What do different models do?"):
         st.caption("We have 2 models to choose from:")
         st.caption("- Nano model is faster but less accurate.")
-        st.caption("- Large model is slower but more accurate.")
+        st.caption("- Small model is slower but more accurate.")
 
     col1, col2 = st.columns(2)
     # Change the IOU threshold
@@ -196,8 +206,7 @@ def app():
 
     # Display the image and run model
     if image_file or image_url:
-        with st.spinner("Loading image..."):
-            time.sleep(0.8)
+        try:
             if image_source == "Enter URL":
                 response = requests.get(image_url)
                 image = Image.open(BytesIO(response.content))
@@ -205,38 +214,46 @@ def app():
                 image = Image.open(image_file)
             else:
                 image = Image.open(image_file)
+        except (FileNotFoundError, requests.HTTPError, URLError) as e:
+            st.error(f"Error loading image: {str(e)}")
+            return
 
-            with st.spinner("Predicting..."):
-                time.sleep(0.8)
-                # Run the model
-                prediction, prediction_text = predict_image(
-                    model, image, confidence_threshold, io_threshold
-                )
-
-            # Display the prediction image
-            st.image(
-                prediction,
-                caption="Fire and smoke detection results",
-                use_column_width=True,
+        with st.spinner("Predicting..."):
+            time.sleep(0.8)
+            # Run the model
+            prediction, prediction_text = predict_image(
+                model, image, confidence_threshold, io_threshold
             )
-            st.success(prediction_text)
 
-            # Create a BytesIO object to temporarily store the image data
-            prediction_image = Image.fromarray(prediction)
-            image_buffer = io.BytesIO()
-            prediction_image.save(image_buffer, format="PNG")
+        # Display the prediction image
+        st.image(
+            prediction,
+            caption="Fire and smoke detection results",
+            use_column_width=True,
+        )
+        st.success(prediction_text)
 
-            # Create a download button for the image
-            current_date = datetime.now().strftime("%Y_%m_%d")
-            st.download_button(
-                label="Download Prediction",
-                data=image_buffer.getvalue(),
-                file_name=f"prediction_{current_date}.png",
-                mime="image/png",
-            )
+        # Create a BytesIO object to temporarily store the image data
+        prediction_image = Image.fromarray(prediction)
+        image_buffer = io.BytesIO()
+        prediction_image.save(image_buffer, format="PNG")
+
+        # Create a download button for the image
+        current_date = datetime.now().strftime("%Y_%m_%d")
+        st.download_button(
+            label="Download Prediction",
+            data=image_buffer.getvalue(),
+            file_name=f"prediction_{current_date}.png",
+            mime="image/png",
+        )
 
 
 if __name__ == "__main__":
-    setup()
-    app()
-    style()
+    try:
+        setup()
+        app()
+        style()
+
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
+        st.stop()
