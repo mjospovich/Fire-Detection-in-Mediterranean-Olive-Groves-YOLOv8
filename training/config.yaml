@@ -1,0 +1,10 @@
+path: add_path/training/data   #* absolute path for data
+train: images/train   #* relative path for train images
+val: images/train   #* relative path for validation images (currently same as train set)
+test: images/test
+
+
+#* Classes (change based on label configuration)
+names:
+  0: smoke
+  1: fire
