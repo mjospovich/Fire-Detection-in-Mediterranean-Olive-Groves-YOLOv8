@@ -57,7 +57,7 @@ YOLOv8n based model fails to detect smoke objects in both images while the YOLOv
 
 ## Deployment
 To demonstrate the capabilities of the trained models, Streamlit was used to create a simple, practical, and aesthetically pleasing web application. 
-<br>You can try it out here: [Fire and Smoke Detection App]()
+<br>You can try it out here: [Fire and Smoke Detection App](https://fire-smoke-detection.streamlit.app/)
 
 <div align="center">
   <img src="assets/app_test.PNG" alt="Streamlit app showcase" style="width: 60%; height: auto;">
