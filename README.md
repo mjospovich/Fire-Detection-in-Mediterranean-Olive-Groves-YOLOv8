@@ -56,3 +56,33 @@ Some prediction which resulted in different outcomes between the models.
 </div>
 YOLOv8n based model fails to detech smoke objects in both images while the YOLOv8s does a good job detecting all objects.
 
+## Deployment
+For the purpose of demostrating the capabilities of trained models Streamlit was used to make a simple yet practical and aestetic webapp.
+<br>You can try it out here: ![Fire and Smoke Detection App]()
+
+<div align="center">
+  <img src="assets/app_test.PNG" alt="Streamlit app showcase" style="width: 60%; height: auto;">
+  <p>Fire and Smoke detection App</p>
+</div>
+
+## Datasets
+### D-Fire Dataset
+Both models are based and trained on this dataset. It containes 21000+ images containg various scenes and different landscapes.
+<br> You can check it out here: ![D-Fire Dataset](https://github.com/gaiasd/DFireDataset)
+### CFD (Croatian Fire Dataset)
+Containing 50+ images of specific Mediterraenian costal landscape with fires in olive groves. Used to train the model specificly to test its capabillity to detect such fires.
+You can download it here: ![Croatia Fire Dataset](https://github.com/mjospovich/Fire-Smoke-Detection/releases/tag/croatan_fire_dataset)
+
+## Acknowledgment
+I would also like to say thanks to the creators of the [D-Fire dataset](https://github.com/gaiasd/DFireDataset) for providing a valuable resource that was the foundatiuon of this project. 
+Furthermore, big thanks to the team at [Ultralytics](https://github.com/ultralytics/ultralytics) for creating YOLOv8 which made it easy to achive such interesting things with object detection.
+Lastly, thumbs up to guys that made ![Streamlit](https://github.com/streamlit/streamlit) such an awesome and easy to use tool for deployment of these models.
+
+## Licence
+fill this gap
+
+<sub><sup>
+Made with 🔥 by Martin Josipović, 2024.
+</sup></sub>
+
+
