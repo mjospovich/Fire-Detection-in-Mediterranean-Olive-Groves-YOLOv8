@@ -22,7 +22,7 @@ os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 def load_model(model_name="nano"):
     try:
         # Depends on where the app is launched from
-        path = rf"Models\{model_name}.pt"
+        path = rf"Deployment\Models\{model_name}.pt"
         model = YOLO(path)
         return model
     except FileNotFoundError:
