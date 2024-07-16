@@ -1,7 +1,4 @@
+ultralytics==8.2.18
 streamlit
-numpy
-opencv-contrib-python-headless
-streamlit-webrtc
 Pillow==10.3.0
 Requests==2.32.3
-ultralytics==8.2.18
