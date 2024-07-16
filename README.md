@@ -1,6 +1,7 @@
 # Fire and Smoke Detection
 Training YOLOv8 models for fire and smoke detection from scratch on the D-Fire dataset and custom data specific to Mediterranean olive groves. 
-Deployment and testing of trained models using Streamlit.
+Deployment and testing of trained models using Streamlit.<br><br>
+![](assets/fireandsmoke.png)
 
 ## Motivation
 In recent years, Mediterranean countries have faced numerous wildfires, often caused by the mishandling of dry leaves and branches in olive groves.
