@@ -1,5 +1,7 @@
 numpy
+opencv-python
 opencv-python-headless
+streamlit-webrtc
 Pillow==10.3.0
 Requests==2.32.3
 streamlit
