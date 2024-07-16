@@ -138,7 +138,7 @@ def app():
     col1, col2 = st.columns(2)
     # Change the IOU threshold
     with col1:
-        io_threshold = st.slider("IOU threshold:", 0.0, 1.0, 0.5, 0.02)
+        io_threshold = st.slider("IOU threshold:", 0.0, 1.0, 0.4, 0.02)
 
     # Change the confidence threshold
     with col2:
@@ -154,7 +154,7 @@ def app():
             st.caption(
                 "- Sets the overlap needed for two detections to be considered the same object."
             )
-            st.caption("- Default is 0.5.")
+            st.caption("- Default is 0.4.")
             st.caption(
                 "- Higher values: more overlapping detections, as each box needs to closely match the ground truth."
             )
