@@ -71,7 +71,7 @@ Both models are based on and trained using this dataset, which contains over 21,
 <br> You can check it out here: [D-Fire Dataset](https://github.com/gaiasd/DFireDataset)
 ### CFD (Croatian Fire Dataset)
 This dataset includes over 50 images of specific Mediterranean coastal landscapes with fires in olive groves, used additionally to test the models' capability to detect such fires.
-<br> You can download it here: [Croatia Fire Dataset](https://github.com/mjospovich/Fire-Smoke-Detection/releases/tag/croatian_fire_dataset)
+<br> You can download it here: [Croatia Fire Dataset](https://github.com/mjospovich/Fire-Detection-in-Mediterranean-Olive-Groves-YOLOv8/releases/tag/croatan_fire_dataset)
 
 ## Acknowledgments
 I would like to thank the creators of the [D-Fire dataset](https://github.com/gaiasd/DFireDataset) for providing a valuable resource that formed the foundation of this project. 
