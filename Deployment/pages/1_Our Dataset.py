@@ -51,7 +51,7 @@ def our_dataset():
             cols = st.columns(2)
         image_path = os.path.join(dataset_folder, image_file)
         image = Image.open(image_path)
-        cols[i % 2].image(image, caption=image_file, use_column_width=True)
+        cols[i % 2].image(image, caption=image_file, width="stretch")
 
     # Check if the zip file exists, create if not
     if not os.path.exists(zip_file_path):

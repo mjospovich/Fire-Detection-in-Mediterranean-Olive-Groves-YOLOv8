@@ -4,6 +4,7 @@ import cv2
 import time
 import random
 import requests
+import torch
 from PIL import Image
 import streamlit as st
 from io import BytesIO
@@ -15,6 +16,14 @@ from urllib.error import URLError
 
 # if issue with duplicate libraries, uncomment the line below
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
+
+# PyTorch 2.6+ defaults to weights_only=True; YOLO checkpoints require weights_only=False
+# Safe here: we load only our own trained models from Deployment/Models/
+_original_torch_load = torch.load
+def _torch_load_patch(*args, **kwargs):
+    kwargs.setdefault("weights_only", False)
+    return _original_torch_load(*args, **kwargs)
+torch.load = _torch_load_patch
 
 
 # * Function to load the YOLO model
@@ -89,7 +98,7 @@ def app():
     st.image(
         "Deployment/assets/wildfire.png",  # Images at Deployment/assets
         caption="AI generated image of a wildfire",
-        use_column_width="always",
+        width="stretch",
     )
 
     # Description
@@ -229,7 +238,7 @@ def app():
         st.image(
             prediction,
             caption="Fire and smoke detection results",
-            use_column_width=True,
+            width="stretch",
         )
         st.success(prediction_text)
 

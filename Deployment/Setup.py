@@ -26,5 +26,5 @@ def setup(
     st.sidebar.image(
         "Deployment/assets/wildfire2.png",
         caption="AI generated image of a wildfire",
-        use_column_width="always",
+        width="stretch",
     )

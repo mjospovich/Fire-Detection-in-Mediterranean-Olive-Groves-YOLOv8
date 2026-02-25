@@ -2,5 +2,5 @@ numpy
 opencv-python-headless
 ultralytics==8.2.18
 streamlit
-Pillow==10.3.0
+Pillow>=10.3.0
 Requests==2.32.3
