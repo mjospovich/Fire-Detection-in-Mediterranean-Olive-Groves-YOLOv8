@@ -1,6 +1,5 @@
 import os
 import io
-import cv2
 import time
 import random
 import requests
@@ -78,9 +77,9 @@ def predict_image(model, image, conf_threshold, iou_threshold):
         latency = round(latency / 1000, 2)
         prediction_text += f" in {latency} seconds."
 
-        # Convert the result image to RGB
+        # Convert the result image to RGB (plot() returns BGR; avoid cv2 so OpenCV system libs are optional)
         res_image = res[0].plot()
-        res_image = cv2.cvtColor(res_image, cv2.COLOR_BGR2RGB)
+        res_image = res_image[..., ::-1]
 
         return res_image, prediction_text
     

@@ -1,6 +1,7 @@
-numpy
-opencv-python-headless
+# Pin versions so Streamlit Cloud cold starts get the same stack (edit together when upgrading)
+numpy>=1.26,<3
+opencv-python-headless==4.10.0.84
 ultralytics==8.2.18
-streamlit
-Pillow>=10.3.0
+streamlit==1.54.0
+Pillow>=10.3.0,<13
 Requests==2.32.3
